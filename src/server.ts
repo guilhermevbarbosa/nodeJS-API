@@ -1,8 +1,11 @@
 import express from "express";
 
 const app = express();
+app.disable("x-powered-by");
+app.use(express.json());
 
-app.get("/", (request, response) => {
+app.post("/", (request, response) => {
+  console.log(request.body);
   return response.json({ message: "Hello World" });
 });
 
