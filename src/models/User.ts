@@ -2,22 +2,22 @@ import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity("users")
 export default class User {
-  @PrimaryGeneratedColumn("increment")
+  @PrimaryGeneratedColumn("uuid")
   id: number;
 
   @Column()
   name: string;
 
-  @Column()
+  @Column({ unique: true })
   email: string;
 
   @Column()
   tel: string;
 
-  @Column()
+  @Column({ unique: true })
   cpf_cnpj: string;
 
-  @Column()
+  @Column({ default: null, nullable: true })
   work_area: string;
 
   @Column()
@@ -28,6 +28,9 @@ export default class User {
 
   @Column()
   state: string;
+
+  @Column()
+  city: string;
 
   @Column()
   password: string;

@@ -1,6 +1,7 @@
 import { ErrorRequestHandler } from "express";
 import { ValidationError } from "yup";
 
+import ErrorMessage from "./errorMessage";
 interface ValidationErrors {
   [key: string]: string[];
 }
@@ -15,12 +16,15 @@ const errorHandler: ErrorRequestHandler = (error, request, response, next) => {
     });
 
     return response.status(400).json({
-      message: "Validation fails",
+      message: "Erro de validação",
       errors,
     });
   }
 
-  console.error(error);
+  // Erro de error message
+  if (error instanceof ErrorMessage) {
+    return response.status(error.statusCode).json({ error: error.message });
+  }
 
   // Erro no servidor
   return response.status(580).json({

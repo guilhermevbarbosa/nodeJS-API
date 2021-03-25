@@ -8,11 +8,10 @@ export class createUsers1616684508564 implements MigrationInterface {
         columns: [
           {
             name: "id",
-            type: "integer",
+            type: "varchar",
             unsigned: true,
             isPrimary: true,
             isGenerated: true,
-            generationStrategy: "increment",
           },
           {
             name: "name",
@@ -33,6 +32,7 @@ export class createUsers1616684508564 implements MigrationInterface {
           {
             name: "work_area",
             type: "varchar",
+            isNullable: true,
           },
           {
             name: "cep",
@@ -44,6 +44,10 @@ export class createUsers1616684508564 implements MigrationInterface {
           },
           {
             name: "state",
+            type: "varchar",
+          },
+          {
+            name: "city",
             type: "varchar",
           },
           {
