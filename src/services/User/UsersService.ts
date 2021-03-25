@@ -6,8 +6,6 @@ import ErrorMessage from "../../errors/errorMessage";
 import UserCreate from "../../models/DTO/UserCreate";
 
 export default class UsersService {
-  constructor() {}
-
   async create(userRequest: UserCreate, response: Response) {
     const userRepo = getRepository(User);
 

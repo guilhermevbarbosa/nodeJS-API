@@ -2,11 +2,9 @@ import { Request, Response } from "express";
 import * as Yup from "yup";
 
 import ErrorMessage from "../errors/errorMessage";
-import UsersService from "../services/User/UserService";
+import UsersService from "../services/User/UsersService";
 
 export default class UsersController {
-  constructor() {}
-
   async create(request: Request, response: Response) {
     const usersService = new UsersService();
     const body = request.body;
