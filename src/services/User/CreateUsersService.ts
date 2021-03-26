@@ -3,9 +3,11 @@ import { getRepository } from "typeorm";
 
 import User from "../../models/User";
 import ErrorMessage from "../../errors/errorMessage";
-import UserCreate from "../../models/DTO/UserCreate";
 
-export default class UsersService {
+import UserCreate from "../../models/request/UserCreate";
+import UserLogin from "../../models/request/UserLogin";
+
+export default class CreateUsersService {
   async create(userRequest: UserCreate, response: Response) {
     const userRepo = getRepository(User);
 
@@ -15,7 +17,7 @@ export default class UsersService {
     const savedUser = await userRepo.save(user);
 
     if (!savedUser) {
-      return response.status(400).json("Não foi possível criar o usuário");
+      throw new ErrorMessage("Não foi possível criar o usuário");
     }
 
     return response.status(200).json(savedUser);
