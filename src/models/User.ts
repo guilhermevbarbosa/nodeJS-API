@@ -37,4 +37,7 @@ export default class User {
 
   @Column()
   account_type: number;
+
+  @Column()
+  salt: string;
 }

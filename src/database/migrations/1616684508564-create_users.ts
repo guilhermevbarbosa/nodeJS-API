@@ -58,6 +58,10 @@ export class createUsers1616684508564 implements MigrationInterface {
             name: "account_type",
             type: "integer",
           },
+          {
+            name: "salt",
+            type: "varchar",
+          },
         ],
       })
     );
