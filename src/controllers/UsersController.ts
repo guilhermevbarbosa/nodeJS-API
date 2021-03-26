@@ -2,11 +2,13 @@ import { Request, Response } from "express";
 import * as Yup from "yup";
 
 import ErrorMessage from "../errors/errorMessage";
-import UsersService from "../services/User/UsersService";
+import CreateUsersService from "../services/User/CreateUsersService";
+import LoginUsersService from "../services/User/LoginUsersService";
 
+const loginUsersService = new LoginUsersService();
+const usersService = new CreateUsersService();
 export default class UsersController {
   async create(request: Request, response: Response) {
-    const usersService = new UsersService();
     const body = request.body;
 
     const validation = Yup.object().shape({
@@ -28,6 +30,33 @@ export default class UsersController {
 
     try {
       await usersService.create(body, response);
+    } catch (error) {
+      throw new ErrorMessage(error);
+    }
+  }
+
+  async login(request: Request, response: Response) {
+    const body = request.body;
+
+    const validation = Yup.object().shape({
+      email: Yup.string().required("E-mail obrigatório"),
+      password: Yup.string().required("Senha obrigatório"),
+    });
+
+    await validation.validate(body, {
+      abortEarly: false,
+    });
+
+    try {
+      await loginUsersService.login(body, response);
+    } catch (error) {
+      throw new ErrorMessage(error);
+    }
+  }
+
+  async logout(request: Request, response: Response) {
+    try {
+      await loginUsersService.logout(request.body, response);
     } catch (error) {
       throw new ErrorMessage(error);
     }

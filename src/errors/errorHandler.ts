@@ -26,6 +26,7 @@ const errorHandler: ErrorRequestHandler = (error, request, response, next) => {
     return response.status(error.statusCode).json({ error: error.message });
   }
 
+  console.error(error);
   // Erro no servidor
   return response.status(580).json({
     message: "Internal server error",

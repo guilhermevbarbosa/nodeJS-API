@@ -5,6 +5,7 @@ import "express-async-errors";
 import "./database/connection";
 import routes from "./routes";
 import errorHandler from "./errors/errorHandler";
+require("dotenv/config");
 
 const app = express();
 
