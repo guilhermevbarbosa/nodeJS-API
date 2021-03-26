@@ -6,9 +6,9 @@ import CreateUsersService from "../services/User/CreateUsersService";
 import LoginUsersService from "../services/User/LoginUsersService";
 
 const loginUsersService = new LoginUsersService();
+const usersService = new CreateUsersService();
 export default class UsersController {
   async create(request: Request, response: Response) {
-    const usersService = new CreateUsersService();
     const body = request.body;
 
     const validation = Yup.object().shape({

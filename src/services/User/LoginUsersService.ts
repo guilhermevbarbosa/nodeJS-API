@@ -10,6 +10,8 @@ import convertSearchedUser from "../../models/dto/searchedUser/ConvertSearchedUs
 import SearchedUser from "../../models/dto/searchedUser/SearchedUser";
 
 import jwt from "jsonwebtoken";
+import fs from "fs";
+import path from "path";
 
 export default class LoginUsersService {
   async login(userRequest: UserLogin, response: Response) {
@@ -47,14 +49,18 @@ async function verifyLogin(
   requestPassword: string
 ) {
   const testPasswords = searchedUser.password == requestPassword ? true : false;
-
   const loggedId = searchedUser.id;
-  const secret = String(process.env.SECRET);
+
+  const privateKey = fs.readFileSync(
+    path.join(__dirname, "..", "..", "..", "private.key"),
+    "utf-8"
+  );
 
   if (testPasswords) {
     try {
-      const token = jwt.sign({ loggedId }, secret, {
+      const token = jwt.sign({ loggedId }, privateKey, {
         expiresIn: 86400000,
+        algorithm: "RS256",
       });
 
       return token;
