@@ -50,7 +50,6 @@ async function handleCrypto(userRequest: UserCreate) {
 async function createDB(userData: any) {
   const userRepo = getRepository(User);
   const user = userRepo.create(userData);
-  console.log(user);
   const savedUser = await userRepo.save(user);
 
   if (!savedUser) {
