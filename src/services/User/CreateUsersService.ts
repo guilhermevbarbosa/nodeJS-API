@@ -5,9 +5,9 @@ import User from "../../models/User";
 import ErrorMessage from "../../errors/errorMessage";
 
 import UserCreate from "../../models/request/UserCreate";
-import CryptoService from "../utils/CryptoService";
 
-const crypto = new CryptoService();
+import ConvertPassService from "../utils/Crypto/ConvertPassService";
+const convertPassService = new ConvertPassService();
 
 export default class CreateUsersService {
   async create(userRequest: UserCreate, response: Response) {
@@ -32,7 +32,7 @@ async function searchEmail(email: string) {
 }
 
 async function handleCrypto(userRequest: UserCreate) {
-  const cryptoData = await crypto.convertPass(userRequest.password);
+  const cryptoData = await convertPassService.crypto(userRequest.password);
 
   const hashedPass = cryptoData.cryptoPass;
   const salt = cryptoData.saltPass;

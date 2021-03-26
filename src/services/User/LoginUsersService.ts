@@ -13,8 +13,8 @@ import jwt from "jsonwebtoken";
 import fs from "fs";
 import path from "path";
 
-import CryptoService from "../utils/CryptoService";
-const crypto = new CryptoService();
+import Sha512ConverterService from "../utils/Crypto/Sha512ConverterService";
+const sha512ConverterService = new Sha512ConverterService();
 
 export default class LoginUsersService {
   async login(userRequest: UserLogin, response: Response) {
@@ -52,7 +52,7 @@ async function verifyLogin(
   searchedUser: SearchedUser,
   requestPassword: string
 ) {
-  const passwordAndSalt = await crypto.sha512(
+  const passwordAndSalt = await sha512ConverterService.sha512(
     requestPassword,
     searchedUser.salt
   );
