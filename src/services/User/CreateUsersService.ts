@@ -39,12 +39,10 @@ async function handleCrypto(userRequest: UserCreate) {
 
   userRequest.password = hashedPass;
 
-  let data = {
+  return {
     ...userRequest,
     salt,
   };
-
-  return data;
 }
 
 async function createDB(userData: any) {
