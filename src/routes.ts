@@ -1,7 +1,7 @@
 import { Router } from "express";
 
 import UsersController from "./controllers/UsersController";
-import VerifyJWTTokenService from "./services/utils/verifyJWTTokenService";
+import VerifyJWTTokenService from "./services/utils/VerifyJWTTokenService";
 
 const routes = Router();
 const usersController = new UsersController();

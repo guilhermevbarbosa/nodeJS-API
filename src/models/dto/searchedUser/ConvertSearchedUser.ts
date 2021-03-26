@@ -7,6 +7,7 @@ export default {
       email: user.email,
       password: user.password,
       account_type: user.account_type,
+      salt: user.salt,
     };
   },
 };

@@ -13,11 +13,15 @@ import jwt from "jsonwebtoken";
 import fs from "fs";
 import path from "path";
 
+import Sha512ConverterService from "../utils/Crypto/Sha512ConverterService";
+const sha512ConverterService = new Sha512ConverterService();
+
 export default class LoginUsersService {
   async login(userRequest: UserLogin, response: Response) {
     const verifyEmailUser = await searchEmail(userRequest.email);
-    const userData = convertSearchedUser.convert(verifyEmailUser);
-    const jwtToken = await verifyLogin(userData, userRequest.password);
+    const foundUserData = convertSearchedUser.convert(verifyEmailUser);
+
+    const jwtToken = await verifyLogin(foundUserData, userRequest.password);
 
     response.json({
       auth: true,
@@ -48,7 +52,13 @@ async function verifyLogin(
   searchedUser: SearchedUser,
   requestPassword: string
 ) {
-  const testPasswords = searchedUser.password == requestPassword ? true : false;
+  const passwordAndSalt = await sha512ConverterService.sha512(
+    requestPassword,
+    searchedUser.salt
+  );
+
+  const testPasswords =
+    searchedUser.password === passwordAndSalt.nHash ? true : false;
   const loggedId = searchedUser.id;
 
   const privateKey = fs.readFileSync(
@@ -57,17 +67,21 @@ async function verifyLogin(
   );
 
   if (testPasswords) {
-    try {
-      const token = jwt.sign({ loggedId }, privateKey, {
-        expiresIn: 86400000,
-        algorithm: "RS256",
-      });
-
-      return token;
-    } catch (error) {
-      throw new ErrorMessage("Erro no login");
-    }
+    return jwtSignin(privateKey, loggedId);
   } else {
     throw new ErrorMessage("Senha incorreta");
+  }
+}
+
+async function jwtSignin(privateKey: string, loggedId: number) {
+  try {
+    const token = jwt.sign({ loggedId }, privateKey, {
+      expiresIn: 86400000,
+      algorithm: "RS256",
+    });
+
+    return token;
+  } catch (error) {
+    throw new ErrorMessage("Erro no login");
   }
 }

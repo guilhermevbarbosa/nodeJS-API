@@ -3,4 +3,5 @@ export default class SearchedUser {
   email: string;
   password: string;
   account_type: number;
+  salt: string;
 }
