@@ -7,22 +7,21 @@ export default class CreateUsersService {
   constructor(
     @inject("UsersRepository")
     private usersRepository: IUsersRepository
-  ) {
-    console.log(this.usersRepository);
-  }
+  ) {}
 
   async create(userRequest: UserCreate) {
-    this.usersRepository.teste();
+    await this.usersRepository.findByEmail(userRequest.email);
+    const cryptoData = await this.usersRepository.handleCrypto(userRequest);
 
-    // await this.usersRepository.findByEmail(userRequest.email);
-    // const cryptoData = await this.usersRepository.handleCrypto(userRequest);
-    // userRequest.password = cryptoData.hashedPass;
-    // const salt = cryptoData.salt;
-    // const data = {
-    //   ...userRequest,
-    //   salt,
-    // };
-    // const createdMessage = await this.usersRepository.create(data);
-    // return createdMessage;
+    userRequest.password = cryptoData.hashedPass;
+
+    const salt = cryptoData.salt;
+    const data = {
+      ...userRequest,
+      salt,
+    };
+
+    const createdMessage = await this.usersRepository.create(data);
+    return createdMessage;
   }
 }

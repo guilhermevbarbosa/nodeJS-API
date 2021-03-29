@@ -5,5 +5,4 @@ export default interface IUsersRepository {
   findByEmail(email: string): Promise<void>;
   create(userData: any): Promise<string>;
   handleCrypto(userRequest: UserCreate): Promise<CryptoDTO>;
-  teste(): void;
 }

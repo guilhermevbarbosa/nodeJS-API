@@ -50,10 +50,6 @@ class UsersRepository implements IUsersRepository {
       salt,
     };
   }
-
-  teste() {
-    console.log("teste");
-  }
 }
 
 export default UsersRepository;

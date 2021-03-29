@@ -1,14 +1,17 @@
 import { Request, Response } from "express";
 import * as Yup from "yup";
+import { container } from "tsyringe";
 
 import ErrorMessage from "../shared/errors/errorMessage";
-import CreateUsersService from "../services/User/CreateUsersService";
 import LoginUsersService from "../services/User/LoginUsersService";
 
+import CreateUsersService from "../services/User/CreateUsersService";
+
 const loginUsersService = new LoginUsersService();
-const usersService = new CreateUsersService();
+
 export default class UsersController {
   async create(request: Request, response: Response) {
+    const usersService = container.resolve(CreateUsersService);
     const body = request.body;
 
     const validation = Yup.object().shape({
@@ -30,7 +33,10 @@ export default class UsersController {
 
     try {
       const created = await usersService.create(body);
-      return response.status(200).json(created);
+
+      return response.status(200).json({
+        message: created,
+      });
     } catch (error) {
       throw new ErrorMessage(error);
     }
