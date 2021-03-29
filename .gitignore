@@ -2,3 +2,4 @@
 /src/database/database.sqlite
 .env
 private.key
+/coverage

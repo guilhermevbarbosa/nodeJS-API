@@ -10,12 +10,12 @@ import ConvertPassService from "../utils/Crypto/ConvertPassService";
 const convertPassService = new ConvertPassService();
 
 export default class CreateUsersService {
-  async create(userRequest: UserCreate, response: Response) {
+  async create(userRequest: UserCreate) {
     await searchEmail(userRequest.email);
     const userObj = await handleCrypto(userRequest);
-    const created = await createDB(userObj);
+    const created = await createInDB(userObj);
 
-    return response.status(200).json(created);
+    return created;
   }
 }
 
@@ -45,7 +45,7 @@ async function handleCrypto(userRequest: UserCreate) {
   };
 }
 
-async function createDB(userData: any) {
+async function createInDB(userData: any) {
   const userRepo = getRepository(User);
   const user = userRepo.create(userData);
   const savedUser = await userRepo.save(user);

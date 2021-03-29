@@ -29,7 +29,8 @@ export default class UsersController {
     });
 
     try {
-      await usersService.create(body, response);
+      const created = await usersService.create(body);
+      return response.status(200).json(created);
     } catch (error) {
       throw new ErrorMessage(error);
     }
