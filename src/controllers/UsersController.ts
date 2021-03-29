@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import * as Yup from "yup";
 
-import ErrorMessage from "../errors/errorMessage";
+import ErrorMessage from "../shared/errors/errorMessage";
 import CreateUsersService from "../services/User/CreateUsersService";
 import LoginUsersService from "../services/User/LoginUsersService";
 

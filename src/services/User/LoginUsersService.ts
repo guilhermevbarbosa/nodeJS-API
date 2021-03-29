@@ -1,7 +1,7 @@
 import { Response } from "express";
 import { getRepository } from "typeorm";
 
-import ErrorMessage from "../../errors/errorMessage";
+import ErrorMessage from "../../shared/errors/errorMessage";
 
 import User from "../../models/User";
 import UserLogin from "../../models/request/UserLogin";

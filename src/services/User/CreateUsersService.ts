@@ -1,58 +1,28 @@
-import { Response } from "express";
-import { getRepository } from "typeorm";
-
-import User from "../../models/User";
-import ErrorMessage from "../../errors/errorMessage";
-
 import UserCreate from "../../models/request/UserCreate";
 
-import ConvertPassService from "../utils/Crypto/ConvertPassService";
-const convertPassService = new ConvertPassService();
-
+import { inject, injectable } from "tsyringe";
+import IUsersRepository from "../../modules/users/IUsersRepository";
+@injectable()
 export default class CreateUsersService {
+  constructor(
+    @inject("UsersRepository")
+    private usersRepository: IUsersRepository
+  ) {
+    console.log(this.usersRepository);
+  }
+
   async create(userRequest: UserCreate) {
-    await searchEmail(userRequest.email);
-    const userObj = await handleCrypto(userRequest);
-    const created = await createInDB(userObj);
+    this.usersRepository.teste();
 
-    return created;
+    // await this.usersRepository.findByEmail(userRequest.email);
+    // const cryptoData = await this.usersRepository.handleCrypto(userRequest);
+    // userRequest.password = cryptoData.hashedPass;
+    // const salt = cryptoData.salt;
+    // const data = {
+    //   ...userRequest,
+    //   salt,
+    // };
+    // const createdMessage = await this.usersRepository.create(data);
+    // return createdMessage;
   }
-}
-
-async function searchEmail(email: string) {
-  const userRepo = getRepository(User);
-
-  const searchIfEmailExists = await userRepo.findOne({
-    where: { email: email },
-  });
-
-  if (searchIfEmailExists) {
-    throw new ErrorMessage("E-mail já cadastrado");
-  }
-}
-
-async function handleCrypto(userRequest: UserCreate) {
-  const cryptoData = await convertPassService.crypto(userRequest.password);
-
-  const hashedPass = cryptoData.cryptoPass;
-  const salt = cryptoData.saltPass;
-
-  userRequest.password = hashedPass;
-
-  return {
-    ...userRequest,
-    salt,
-  };
-}
-
-async function createInDB(userData: any) {
-  const userRepo = getRepository(User);
-  const user = userRepo.create(userData);
-  const savedUser = await userRepo.save(user);
-
-  if (!savedUser) {
-    throw new ErrorMessage("Não foi possível criar o usuário");
-  }
-
-  return savedUser;
 }
