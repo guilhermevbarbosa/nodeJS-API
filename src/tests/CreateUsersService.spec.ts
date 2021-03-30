@@ -1,15 +1,18 @@
-import UserCreate from "../src/models/request/UserCreate";
-import CreateUsersService from "../src/services/User/CreateUsersService";
+import FakeUsersRepository from "../modules/users/fakes/FakeUsersRepository";
+
+import CreateUsersService from "../services/User/CreateUsersService";
 
 describe("testing users service", () => {
-  let createUsersService: CreateUsersService;
+  let fakeUsersRepository: FakeUsersRepository;
+  let createUser: CreateUsersService;
 
   beforeEach(() => {
-    createUsersService = new CreateUsersService();
+    fakeUsersRepository = new FakeUsersRepository();
+    createUser = new CreateUsersService(fakeUsersRepository);
   });
 
-  test("create user", async () => {
-    let user: UserCreate = {
+  it("should be able to create a new user", async () => {
+    const user = await createUser.create({
       name: "Teste",
       email: "g2@g.com",
       tel: "5511-7170",
@@ -21,8 +24,8 @@ describe("testing users service", () => {
       city: "São Paulo",
       password: "123456g",
       account_type: 0,
-    };
+    });
 
-    expect(await createUsersService.create(user)).toContain("id");
+    expect(user).toMatch("Criado com sucesso!");
   });
 });
