@@ -1,8 +1,8 @@
 import CryptoDTO from "../../models/dto/searchedUser/Crypto";
-import UserCreate from "../../models/request/UserCreate";
+import User from "../../models/User";
 
 export default interface IUsersRepository {
-  findByEmail(email: string): Promise<void>;
+  findByEmail(email: string): Promise<User | undefined>;
   create(userData: any): Promise<string>;
-  handleCrypto(userRequest: UserCreate): Promise<CryptoDTO>;
+  handleCrypto(password: string): Promise<CryptoDTO>;
 }

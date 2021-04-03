@@ -16,14 +16,12 @@ class UsersRepository implements IUsersRepository {
     this.convertPassService = new ConvertPassService();
   }
 
-  public async findByEmail(email: string): Promise<void> {
+  public async findByEmail(email: string): Promise<User | undefined> {
     const searchIfEmailExists = await this.ormRepository.findOne({
       where: { email: email },
     });
 
-    if (searchIfEmailExists) {
-      throw new ErrorMessage("E-mail já cadastrado");
-    }
+    return searchIfEmailExists;
   }
 
   public async create(userData: any): Promise<string> {
@@ -37,10 +35,8 @@ class UsersRepository implements IUsersRepository {
     return "Criado com sucesso!";
   }
 
-  public async handleCrypto(userRequest: UserCreate): Promise<CryptoDTO> {
-    const cryptoData = await this.convertPassService.crypto(
-      userRequest.password
-    );
+  public async handleCrypto(password: string): Promise<CryptoDTO> {
+    const cryptoData = await this.convertPassService.crypto(password);
 
     const hashedPass = cryptoData.cryptoPass;
     const salt = cryptoData.saltPass;
