@@ -55,7 +55,12 @@ export default class UsersController {
     });
 
     try {
-      await loginUsersService.login(body, response);
+      const jwtToken = await loginUsersService.login(body);
+
+      response.json({
+        auth: true,
+        token: jwtToken,
+      });
     } catch (error) {
       throw new ErrorMessage(error);
     }
@@ -63,7 +68,9 @@ export default class UsersController {
 
   async logout(request: Request, response: Response) {
     try {
-      await loginUsersService.logout(request.body, response);
+      const data = await loginUsersService.logout(request.body);
+
+      response.json({ auth: data.auth, token: data.token });
     } catch (error) {
       throw new ErrorMessage(error);
     }
