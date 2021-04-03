@@ -32,6 +32,6 @@ export default class CreateUsersService {
       salt,
     };
 
-    return await this.usersRepository.create(data);
+    return this.usersRepository.create(data);
   }
 }
