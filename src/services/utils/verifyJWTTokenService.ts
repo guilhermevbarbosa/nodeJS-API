@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from "express";
 
-import ErrorMessage from "../../errors/errorMessage";
+import ErrorMessage from "../../shared/errors/errorMessage";
 
 import jwt from "jsonwebtoken";
 import fs from "fs";

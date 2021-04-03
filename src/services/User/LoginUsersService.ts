@@ -1,7 +1,7 @@
 import { Response } from "express";
 import { getRepository } from "typeorm";
 
-import ErrorMessage from "../../errors/errorMessage";
+import ErrorMessage from "../../shared/errors/errorMessage";
 
 import User from "../../models/User";
 import UserLogin from "../../models/request/UserLogin";
@@ -17,20 +17,15 @@ import Sha512ConverterService from "../utils/Crypto/Sha512ConverterService";
 const sha512ConverterService = new Sha512ConverterService();
 
 export default class LoginUsersService {
-  async login(userRequest: UserLogin, response: Response) {
+  async login(userRequest: UserLogin) {
     const verifyEmailUser = await searchEmail(userRequest.email);
     const foundUserData = convertSearchedUser.convert(verifyEmailUser);
 
-    const jwtToken = await verifyLogin(foundUserData, userRequest.password);
-
-    response.json({
-      auth: true,
-      token: jwtToken,
-    });
+    return await verifyLogin(foundUserData, userRequest.password);
   }
 
-  async logout(request: Request, response: Response) {
-    response.json({ auth: false, token: null });
+  async logout(request: Request) {
+    return { auth: false, token: null };
   }
 }
 
@@ -59,14 +54,14 @@ async function verifyLogin(
 
   const testPasswords =
     searchedUser.password === passwordAndSalt.nHash ? true : false;
-  const loggedId = searchedUser.id;
-
-  const privateKey = fs.readFileSync(
-    path.join(__dirname, "..", "..", "..", "private.key"),
-    "utf-8"
-  );
 
   if (testPasswords) {
+    const loggedId = searchedUser.id;
+    const privateKey = fs.readFileSync(
+      path.join(__dirname, "..", "..", "..", "private.key"),
+      "utf-8"
+    );
+
     return jwtSignin(privateKey, loggedId);
   } else {
     throw new ErrorMessage("Senha incorreta");
