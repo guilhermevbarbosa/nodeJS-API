@@ -1,6 +1,6 @@
 import { v4 as uuidv4 } from "uuid";
 
-import CryptoDTO from "../../../models/dto/searchedUser/Crypto";
+import CryptoDTO from "../../../models/dto/searchedUser/CryptoDTO";
 import User from "../../../models/User";
 import IUsersRepository from "../IUsersRepository";
 import ConvertPassService from "../../../services/utils/Crypto/ConvertPassService";
@@ -9,15 +9,13 @@ class UsersRepository implements IUsersRepository {
   private users: User[] = [];
 
   public async findByEmail(email: string): Promise<User | undefined> {
-    const searchIfEmailExists = this.users.find((user) => user.email === email);
-
-    return searchIfEmailExists;
+    return this.users.find((user) => user.email === email);
   }
 
   public async create(userData: User): Promise<string> {
     const user = new User();
 
-    const crypto = await this.handleCrypto(userData.password)
+    const crypto = await this.handleCrypto(userData.password);
 
     userData.password = crypto.hashedPass;
     userData.salt = crypto.salt;

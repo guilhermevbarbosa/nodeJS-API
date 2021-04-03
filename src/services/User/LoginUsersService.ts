@@ -1,4 +1,3 @@
-import { Response } from "express";
 import { getRepository } from "typeorm";
 
 import ErrorMessage from "../../shared/errors/errorMessage";
@@ -21,7 +20,7 @@ export default class LoginUsersService {
     const verifyEmailUser = await searchEmail(userRequest.email);
     const foundUserData = convertSearchedUser.convert(verifyEmailUser);
 
-    return await verifyLogin(foundUserData, userRequest.password);
+    return verifyLogin(foundUserData, userRequest.password);
   }
 
   async logout(request: Request) {

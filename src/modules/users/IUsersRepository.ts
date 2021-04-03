@@ -1,4 +1,4 @@
-import CryptoDTO from "../../models/dto/searchedUser/Crypto";
+import CryptoDTO from "../../models/dto/searchedUser/CryptoDTO";
 import User from "../../models/User";
 
 export default interface IUsersRepository {

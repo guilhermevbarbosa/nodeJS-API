@@ -3,9 +3,8 @@ import { getRepository, Repository } from "typeorm";
 import IUsersRepository from "../IUsersRepository";
 import User from "../../../models/User";
 import ErrorMessage from "../../../shared/errors/errorMessage";
-import UserCreate from "../../../models/request/UserCreate";
 import ConvertPassService from "../../../services/utils/Crypto/ConvertPassService";
-import CryptoDTO from "../../../models/dto/searchedUser/Crypto";
+import CryptoDTO from "../../../models/dto/searchedUser/CryptoDTO";
 
 class UsersRepository implements IUsersRepository {
   private ormRepository: Repository<User>;
@@ -17,11 +16,9 @@ class UsersRepository implements IUsersRepository {
   }
 
   public async findByEmail(email: string): Promise<User | undefined> {
-    const searchIfEmailExists = await this.ormRepository.findOne({
+    return await this.ormRepository.findOne({
       where: { email: email },
     });
-
-    return searchIfEmailExists;
   }
 
   public async create(userData: any): Promise<string> {
