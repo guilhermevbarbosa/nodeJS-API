@@ -15,6 +15,8 @@ routes.post("/user", usersController.create);
 routes.post("/login", usersController.login);
 routes.post("/logout", usersController.logout);
 
-routes.post("/service", jobsController.create);
+routes.post("/service", jwt.verify, jobsController.create);
+routes.get("/service", jobsController.getAll);
+routes.get("/service/:jobId", jobsController.getOne);
 
 export default routes;
