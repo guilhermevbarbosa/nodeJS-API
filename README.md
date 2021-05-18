@@ -15,4 +15,4 @@ yarn typeorm migration:run
 
 yarn typeorm migration:create -n nome_migration
 
-yarn typeorm migraiton:revert
+yarn typeorm migration:revert

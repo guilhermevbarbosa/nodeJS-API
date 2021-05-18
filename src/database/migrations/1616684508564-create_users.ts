@@ -27,7 +27,7 @@ export class createUsers1616684508564 implements MigrationInterface {
           },
           {
             name: "cpf_cnpj",
-            type: "varchar",
+            type: "varchar(30)",
           },
           {
             name: "work_area",
@@ -36,7 +36,7 @@ export class createUsers1616684508564 implements MigrationInterface {
           },
           {
             name: "cep",
-            type: "varchar",
+            type: "varchar(9)",
           },
           {
             name: "address",
@@ -44,7 +44,7 @@ export class createUsers1616684508564 implements MigrationInterface {
           },
           {
             name: "state",
-            type: "varchar",
+            type: "varchar(2)",
           },
           {
             name: "city",
