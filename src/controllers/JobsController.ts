@@ -59,4 +59,17 @@ export default class JobsController {
             throw new ErrorMessage(error);
         }
     }
+
+    async getJobsInCategory(request: Request, response: Response) {
+        const jobsService = container.resolve(GetJobsService);
+        const category = request.params.jobCategory;
+
+        try {
+            const job = await jobsService.getJobsInCategory(category);
+
+            return response.status(200).json(job);
+        } catch (error) {
+            throw new ErrorMessage(error);
+        }
+    }
 }

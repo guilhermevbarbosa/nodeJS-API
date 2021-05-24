@@ -43,6 +43,18 @@ class JobsRepository implements IJobsRepository {
 
         return job;
     }
+
+    public async getJobsInCategory(category: string): Promise<Array<Job>> {
+        const job = await this.ormRepository.find({
+            where: { category: category }
+        });
+
+        if (!job) {
+            throw new ErrorMessage("Não foi possível localizar o serviço");
+        }
+
+        return job;
+    }
 }
 
 export default JobsRepository;

@@ -15,4 +15,8 @@ export default class GetJobsService {
     async getOne(jobId: string) {
         return this.jobsRepository.getOne(jobId);
     }
+
+    async getJobsInCategory(jobCategory: string) {
+        return this.jobsRepository.getJobsInCategory(jobCategory);
+    }
 }
