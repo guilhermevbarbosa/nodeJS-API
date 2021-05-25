@@ -13,7 +13,12 @@ import "./shared/container";
 
 const app = express();
 
-app.use(cors());
+const corsOptions = {
+    origin: '*',
+    optionsSuccessStatus: 200
+};
+app.use(cors(corsOptions));
+
 app.disable("x-powered-by");
 app.use(helmet());
 

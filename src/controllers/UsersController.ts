@@ -62,7 +62,7 @@ export default class UsersController {
         token: jwtToken,
       });
     } catch (error) {
-      throw new ErrorMessage(error);
+      throw new ErrorMessage(error.message);
     }
   }
 
