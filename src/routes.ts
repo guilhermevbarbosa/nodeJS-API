@@ -15,6 +15,8 @@ routes.post("/user", usersController.create);
 routes.post("/login", usersController.login);
 routes.post("/logout", usersController.logout);
 
+routes.post('/token', usersController.verifyTokenOnFrontEnd);
+
 routes.post("/service", jwt.verify, jobsController.create);
 routes.get("/service", jwt.verify, jobsController.getAll);
 routes.get("/service/:jobId", jwt.verify, jobsController.getOne);

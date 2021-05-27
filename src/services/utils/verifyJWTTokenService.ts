@@ -27,4 +27,25 @@ export default class VerifyJWTTokenService {
       next();
     });
   }
+
+  async verifyTokenOnFrontEnd(request: Request) {
+    const token = String(request.headers.authorization).split(" ")[1];
+
+    const publicKey = fs.readFileSync(
+      path.join(__dirname, "..", "..", "..", "public.key"),
+      "utf-8"
+    );
+
+    if (!token) {
+      throw new ErrorMessage("Não há token fornecido", 401);
+    }
+
+    jwt.verify(token, publicKey, function (err, decoded) {
+      if (err) {
+        throw new ErrorMessage("Token inválido", 500);
+      }
+
+      return;
+    });
+  }
 }

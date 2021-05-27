@@ -6,8 +6,10 @@ import ErrorMessage from "../shared/errors/errorMessage";
 import LoginUsersService from "../services/User/LoginUsersService";
 
 import CreateUsersService from "../services/User/CreateUsersService";
+import VerifyJWTTokenService from "../services/utils/verifyJWTTokenService";
 
 const loginUsersService = new LoginUsersService();
+const verifyTokenService = new VerifyJWTTokenService();
 
 export default class UsersController {
   async create(request: Request, response: Response) {
@@ -71,6 +73,15 @@ export default class UsersController {
       const data = await loginUsersService.logout(request.body);
 
       response.json({ auth: data.auth, token: data.token });
+    } catch (error) {
+      throw new ErrorMessage(error);
+    }
+  }
+
+  async verifyTokenOnFrontEnd(request: Request, response: Response) {
+    try {
+      await verifyTokenService.verifyTokenOnFrontEnd(request);
+      response.json({ message: 'Autenticado' });
     } catch (error) {
       throw new ErrorMessage(error);
     }
