@@ -44,8 +44,6 @@ export default class VerifyJWTTokenService {
       if (err) {
         throw new ErrorMessage("Token inválido", 500);
       }
-
-      return;
     });
   }
 }
