@@ -61,7 +61,10 @@ async function verifyLogin(
       "utf-8"
     );
 
-    return jwtSignin(privateKey, loggedId);
+    return {
+      jwt: await jwtSignin(privateKey, loggedId),
+      id: loggedId
+    }
   } else {
     throw new ErrorMessage("Senha incorreta");
   }
@@ -69,12 +72,10 @@ async function verifyLogin(
 
 async function jwtSignin(privateKey: string, loggedId: number) {
   try {
-    const token = jwt.sign({ loggedId }, privateKey, {
+    return jwt.sign({ loggedId }, privateKey, {
       expiresIn: 86400000,
       algorithm: "RS256",
     });
-
-    return token;
   } catch (error) {
     throw new ErrorMessage("Erro no login");
   }

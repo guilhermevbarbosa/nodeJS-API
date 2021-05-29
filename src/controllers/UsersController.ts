@@ -57,11 +57,11 @@ export default class UsersController {
     });
 
     try {
-      const jwtToken = await loginUsersService.login(body);
+      const tokenResponse = await loginUsersService.login(body);
 
       response.json({
-        auth: true,
-        token: jwtToken,
+        token: tokenResponse.jwt,
+        uid: tokenResponse.id
       });
     } catch (error) {
       throw new ErrorMessage(error.message);
