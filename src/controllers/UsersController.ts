@@ -46,7 +46,7 @@ export default class UsersController {
 
   async login(request: Request, response: Response) {
     const body = request.body;
-
+    
     const validation = Yup.object().shape({
       email: Yup.string().required("E-mail obrigatório"),
       password: Yup.string().required("Senha obrigatório"),
@@ -66,6 +66,11 @@ export default class UsersController {
     } catch (error) {
       throw new ErrorMessage(error.message);
     }
+  }
+
+  async profile(request: Request, response: Response) {
+    const body = request.body;
+    console.log(body);
   }
 
   async logout(request: Request, response: Response) {
