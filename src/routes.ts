@@ -14,8 +14,9 @@ const jobsController = new JobsController();
 routes.post("/user", usersController.create);
 routes.post("/login", usersController.login);
 routes.post("/logout", usersController.logout);
+routes.post("/profile", usersController.profile);
 
-routes.post('/token', usersController.verifyTokenOnFrontEnd);
+// routes.post('/token', usersController.verifyTokenOnFrontEnd);
 
 routes.post("/service", jwt.verify, jobsController.create);
 routes.get("/service", jwt.verify, jobsController.getAll);
