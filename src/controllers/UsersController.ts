@@ -3,9 +3,11 @@ import * as Yup from "yup";
 import { container } from "tsyringe";
 
 import ErrorMessage from "../shared/errors/errorMessage";
-import LoginUsersService from "../services/User/LoginUsersService";
 
 import CreateUsersService from "../services/User/CreateUsersService";
+import UserDataService from "../services/User/UserDataService";
+
+import LoginUsersService from "../services/User/LoginUsersService";
 import VerifyJWTTokenService from "../services/utils/verifyJWTTokenService";
 
 const loginUsersService = new LoginUsersService();
@@ -46,7 +48,7 @@ export default class UsersController {
 
   async login(request: Request, response: Response) {
     const body = request.body;
-    
+
     const validation = Yup.object().shape({
       email: Yup.string().required("E-mail obrigatório"),
       password: Yup.string().required("Senha obrigatório"),
@@ -69,8 +71,16 @@ export default class UsersController {
   }
 
   async profile(request: Request, response: Response) {
+    const usersDataService = container.resolve(UserDataService);
     const body = request.body;
-    console.log(body);
+
+    try {
+      const data = await usersDataService.get(body);
+
+      response.json(data);
+    } catch (error) {
+      throw new ErrorMessage(error);
+    }
   }
 
   async logout(request: Request, response: Response) {
