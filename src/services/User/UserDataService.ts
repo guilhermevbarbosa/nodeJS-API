@@ -25,8 +25,6 @@ export default class UserDataService {
     }
 
     async update(userId: string, userData: any) {
-        const update = await this.usersRepository.update(userId, userData);
-
-        return update;
+        return this.usersRepository.update(userId, userData);
     }
 }
