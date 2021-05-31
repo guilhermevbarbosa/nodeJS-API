@@ -4,7 +4,7 @@ import { container } from "tsyringe";
 
 import CreateJobsService from "../services/Job/CreateJobsService";
 import ErrorMessage from "../shared/errors/errorMessage";
-import GetJobsService from "../services/Job/GetJobService";
+import GetJobsService from "../services/Job/GetJobsService";
 
 export default class JobsController {
     async create(request: Request, response: Response) {
