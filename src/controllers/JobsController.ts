@@ -2,7 +2,7 @@ import { Request, Response } from "express";
 import * as Yup from "yup";
 import { container } from "tsyringe";
 
-import CreateJobsService from "../services/Job/CreateJobService";
+import CreateJobsService from "../services/Job/CreateJobsService";
 import ErrorMessage from "../shared/errors/errorMessage";
 import GetJobsService from "../services/Job/GetJobService";
 
