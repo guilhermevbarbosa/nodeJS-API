@@ -23,4 +23,10 @@ export default class UserDataService {
 
         return ConvertUserToProfile.convert(userData);
     }
+
+    async update(userId: string, userData: any) {
+        const update = await this.usersRepository.update(userId, userData);
+
+        return update;
+    }
 }

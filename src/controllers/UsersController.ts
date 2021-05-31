@@ -83,6 +83,24 @@ export default class UsersController {
     }
   }
 
+  async update(request: Request, response: Response) {
+    const usersDataService = container.resolve(UserDataService);
+
+    const body = request.body;
+    const id = body.id;
+    delete body.id;
+
+    try {
+      const data = await usersDataService.update(id, body);
+
+      return response.status(data.status).json({
+        message: data.message,
+      });
+    } catch (error) {
+      throw new ErrorMessage(error);
+    }
+  }
+
   async logout(request: Request, response: Response) {
     try {
       const data = await loginUsersService.logout(request.body);

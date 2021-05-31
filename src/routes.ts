@@ -15,6 +15,7 @@ routes.post("/user", usersController.create);
 routes.post("/login", usersController.login);
 routes.post("/logout", usersController.logout);
 routes.post("/profile", usersController.profile);
+routes.post("/profile-edit", usersController.update);
 
 routes.post('/token', usersController.verifyTokenOnFrontEnd);
 

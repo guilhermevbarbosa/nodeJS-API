@@ -40,6 +40,51 @@ class UsersRepository implements IUsersRepository {
     return "Criado com sucesso!";
   }
 
+  public async update(id: string, userData: any): Promise<any> {
+    const email = userData.email;
+
+    const userBD = await this.ormRepository.findOne({
+      where: { email: email },
+    });
+
+    if (userBD) {
+      const bdId = String(userBD.id);
+
+      if (bdId !== id) {
+        return {
+          status: 400,
+          message: 'E-mail em uso'
+        }
+      }
+    }
+
+    const userCPFBD = await this.ormRepository.findOne({
+      where: { cpf_cnpj: userData.cpf_cnpj },
+    });
+
+    if (userCPFBD) {
+      const bdId = String(userCPFBD.id);
+
+      if (bdId !== id) {
+        return {
+          status: 400,
+          message: 'CPF em uso'
+        }
+      }
+    }
+
+    try {
+      await this.ormRepository.update(id, userData);
+
+      return {
+        status: 200,
+        message: 'Atualizado com sucesso'
+      }
+    } catch (error) {
+      return error;
+    }
+  }
+
   public async handleCrypto(password: string): Promise<CryptoDTO> {
     const cryptoData = await this.convertPassService.crypto(password);
 
