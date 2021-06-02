@@ -24,4 +24,6 @@ routes.get("/service", jwt.verify, jobsController.getAll);
 routes.get("/service/:jobId", jwt.verify, jobsController.getOne);
 routes.get("/service/category/:jobCategory", jobsController.getJobsInCategory);
 
+routes.post("/service/profile", jobsController.teste);
+
 export default routes;

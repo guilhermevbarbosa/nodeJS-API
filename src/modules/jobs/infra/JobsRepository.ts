@@ -55,6 +55,18 @@ class JobsRepository implements IJobsRepository {
 
         return job;
     }
+
+    public async getProfileJobs(userId: string): Promise<Array<Job>> {
+        const jobs = await this.ormRepository.find({
+            where: { user_id: userId }
+        });
+
+        if (jobs.length == 0) {
+            throw new ErrorMessage("Não possui serviços ainda");
+        }
+
+        return jobs;
+    }
 }
 
 export default JobsRepository;

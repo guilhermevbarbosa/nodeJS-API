@@ -72,4 +72,16 @@ export default class JobsController {
             throw new ErrorMessage(error);
         }
     }
+
+    async teste(request: Request, response: Response) {
+        const jobsService = container.resolve(GetJobsService);
+        const userId = request.body.userId;
+
+        try {
+            const jobs = await jobsService.getJobsInProfile(userId);
+            return response.status(200).json(jobs);
+        } catch (error) {
+            throw new ErrorMessage(error);
+        }
+    }
 }
