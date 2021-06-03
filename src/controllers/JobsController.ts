@@ -62,7 +62,7 @@ export default class JobsController {
 
     async getJobsInCategory(request: Request, response: Response) {
         const jobsService = container.resolve(GetJobsService);
-        const category = request.params.jobCategory;
+        const category = request.body.categoria;
 
         try {
             const job = await jobsService.getJobsInCategory(category);
