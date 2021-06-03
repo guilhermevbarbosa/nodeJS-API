@@ -49,7 +49,7 @@ export default class JobsController {
 
     async getOne(request: Request, response: Response) {
         const jobsService = container.resolve(GetJobsService);
-        const id = request.params.jobId;
+        const id = request.body.id;
 
         try {
             const job = await jobsService.getOne(id);
@@ -73,13 +73,28 @@ export default class JobsController {
         }
     }
 
-    async teste(request: Request, response: Response) {
+    async getProfileJobs(request: Request, response: Response) {
         const jobsService = container.resolve(GetJobsService);
         const userId = request.body.userId;
 
         try {
             const jobs = await jobsService.getJobsInProfile(userId);
             return response.status(200).json(jobs);
+        } catch (error) {
+            throw new ErrorMessage(error);
+        }
+    }
+
+    async update(request: Request, response: Response) {
+        const jobsService = container.resolve(CreateJobsService);
+
+        const body = request.body;
+        const id = body.id;
+        delete body.id;
+
+        try {
+            const data = await jobsService.update(id, body);
+            return response.status(200).json(data);
         } catch (error) {
             throw new ErrorMessage(error);
         }

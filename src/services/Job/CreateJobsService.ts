@@ -11,4 +11,8 @@ export default class CreateJobsService {
     async create(jobRequest: any) {
         return this.jobsRepository.create(jobRequest);
     }
+
+    async update(id: string, jobData: any) {
+        return this.jobsRepository.update(id, jobData);
+    }
 }

@@ -67,6 +67,19 @@ class JobsRepository implements IJobsRepository {
 
         return jobs;
     }
+
+    public async update(id: string, jobData: any): Promise<any> {
+        try {
+            await this.ormRepository.update(id, jobData);
+
+            return {
+                status: 200,
+                message: 'Atualizado com sucesso'
+            }
+        } catch (error) {
+            return error;
+        }
+    }
 }
 
 export default JobsRepository;

@@ -21,9 +21,11 @@ routes.post('/token', usersController.verifyTokenOnFrontEnd);
 
 routes.post("/service", jwt.verify, jobsController.create);
 routes.get("/service", jwt.verify, jobsController.getAll);
-routes.get("/service/:jobId", jwt.verify, jobsController.getOne);
 routes.get("/service/category/:jobCategory", jobsController.getJobsInCategory);
 
-routes.post("/service/profile", jobsController.teste);
+routes.post("/serviceId", jwt.verify, jobsController.getOne);
+
+routes.post("/service/profile", jwt.verify, jobsController.getProfileJobs);
+routes.put("/service/update", jwt.verify, jobsController.update);
 
 export default routes;
