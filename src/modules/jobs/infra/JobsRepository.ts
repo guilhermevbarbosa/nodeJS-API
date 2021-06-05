@@ -39,25 +39,23 @@ class JobsRepository implements IJobsRepository {
             relations: ['user_id']
         });
 
-        const job = {
-            id: String(jobSearch!.id),
-            name: jobSearch!.name,
-            description: jobSearch!.description,
-            category: jobSearch!.category,
-            aprox_val: jobSearch!.aprox_val,
-            email: jobSearch!.user_id.email,
-            tel: jobSearch!.user_id.tel,
-            address: jobSearch!.user_id.address,
-            state: jobSearch!.user_id.state,
-            city: jobSearch!.user_id.city,
-            userName: jobSearch!.user_id.name
-        };
-
         if (!jobSearch) {
             throw new ErrorMessage("Não foi possível localizar o serviço");
+        } else {
+            return {
+                id: String(jobSearch.id),
+                name: jobSearch.name,
+                description: jobSearch.description,
+                category: jobSearch.category,
+                aprox_val: jobSearch.aprox_val,
+                email: jobSearch.user_id.email,
+                tel: jobSearch.user_id.tel,
+                address: jobSearch.user_id.address,
+                state: jobSearch.user_id.state,
+                city: jobSearch.user_id.city,
+                userName: jobSearch.user_id.name
+            };
         }
-
-        return job;
     }
 
     public async getJobsInCategory(category: string): Promise<Array<Job>> {
