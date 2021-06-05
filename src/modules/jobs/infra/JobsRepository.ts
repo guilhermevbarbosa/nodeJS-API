@@ -13,7 +13,7 @@ class JobsRepository implements IJobsRepository {
     }
 
     public async create(jobData: any): Promise<string> {
-        const job = await this.ormRepository.create(jobData);
+        const job = this.ormRepository.create(jobData);
         const savedJob = await this.ormRepository.save(job);
 
         if (!savedJob) {

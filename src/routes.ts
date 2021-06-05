@@ -4,12 +4,14 @@ import VerifyJWTTokenService from "./services/utils/verifyJWTTokenService";
 
 import JobsController from "./controllers/JobsController";
 import UsersController from "./controllers/UsersController";
+import FavoritesController from "./controllers/FavoritesController";
 
 const routes = Router();
 const jwt = new VerifyJWTTokenService();
 
 const usersController = new UsersController();
 const jobsController = new JobsController();
+const favoritesController = new FavoritesController();
 
 routes.post("/user", usersController.create);
 routes.post("/login", usersController.login);
@@ -28,5 +30,7 @@ routes.post("/serviceId", jwt.verify, jobsController.getOne);
 routes.post("/service/profile", jwt.verify, jobsController.getProfileJobs);
 routes.put("/service/update", jwt.verify, jobsController.update);
 routes.post("/service/delete", jwt.verify, jobsController.delete);
+
+routes.post("/service/favorite", jwt.verify, favoritesController.create);
 
 export default routes;
