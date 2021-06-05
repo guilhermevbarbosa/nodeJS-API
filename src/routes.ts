@@ -27,5 +27,6 @@ routes.post("/serviceId", jwt.verify, jobsController.getOne);
 
 routes.post("/service/profile", jwt.verify, jobsController.getProfileJobs);
 routes.put("/service/update", jwt.verify, jobsController.update);
+routes.post("/service/delete", jwt.verify, jobsController.delete);
 
 export default routes;

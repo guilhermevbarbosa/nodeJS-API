@@ -2,14 +2,14 @@ import { Request, Response } from "express";
 import * as Yup from "yup";
 import { container } from "tsyringe";
 
-import CreateJobsService from "../services/Job/CreateJobsService";
+import ModJobsService from "../services/Job/ModJobsService";
 import ErrorMessage from "../shared/errors/errorMessage";
 import GetJobsService from "../services/Job/GetJobsService";
 
 export default class JobsController {
     async create(request: Request, response: Response) {
 
-        const jobsService = container.resolve(CreateJobsService);
+        const jobsService = container.resolve(ModJobsService);
         const body = request.body;
 
         const validation = Yup.object().shape({
@@ -86,7 +86,7 @@ export default class JobsController {
     }
 
     async update(request: Request, response: Response) {
-        const jobsService = container.resolve(CreateJobsService);
+        const jobsService = container.resolve(ModJobsService);
 
         const body = request.body;
         const id = body.id;
@@ -94,6 +94,20 @@ export default class JobsController {
 
         try {
             const data = await jobsService.update(id, body);
+            return response.status(200).json(data);
+        } catch (error) {
+            throw new ErrorMessage(error);
+        }
+    }
+
+    async delete(request: Request, response: Response) {
+        const jobsService = container.resolve(ModJobsService);
+
+        const body = request.body;
+        const id = body.id;
+
+        try {
+            const data = await jobsService.delete(id);
             return response.status(200).json(data);
         } catch (error) {
             throw new ErrorMessage(error);

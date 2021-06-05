@@ -96,6 +96,15 @@ class JobsRepository implements IJobsRepository {
             return error;
         }
     }
+
+    public async delete(id: string): Promise<string> {
+        try {
+            await this.ormRepository.delete(id);
+            return 'Deletado com sucesso';
+        } catch (error) {
+            return error;
+        }
+    }
 }
 
 export default JobsRepository;

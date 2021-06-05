@@ -2,7 +2,7 @@ import { inject, injectable } from "tsyringe";
 import IJobsRepository from "../../modules/jobs/IJobsRepository";
 
 @injectable()
-export default class CreateJobsService {
+export default class ModJobsService {
     constructor(
         @inject("JobsRepository")
         private jobsRepository: IJobsRepository
@@ -14,5 +14,9 @@ export default class CreateJobsService {
 
     async update(id: string, jobData: any) {
         return this.jobsRepository.update(id, jobData);
+    }
+
+    async delete(id: string) {
+        return this.jobsRepository.delete(id);
     }
 }
