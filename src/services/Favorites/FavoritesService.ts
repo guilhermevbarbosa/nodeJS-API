@@ -19,4 +19,8 @@ export default class FavoritesService {
     async delete(jobId: string, userId: string) {
         return this.favoritesRepository.delete(jobId, userId);
     }
+
+    async getAll(uid: string) {
+        return this.favoritesRepository.getAll(uid);
+    }
 }

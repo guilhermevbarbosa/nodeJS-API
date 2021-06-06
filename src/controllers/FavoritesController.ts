@@ -84,4 +84,27 @@ export default class FavoritesController {
             throw new ErrorMessage(error);
         }
     }
+
+    async getAll(request: Request, response: Response) {
+        const favoriteService = container.resolve(FavoritesService);
+        const body = request.body;
+
+        const user_id = body.user_id;
+
+        const validation = Yup.object().shape({
+            user_id: Yup.string().required("user_id obrigatório"),
+        });
+
+        await validation.validate(body, {
+            abortEarly: false
+        });
+
+        try {
+            const favorites = await favoriteService.getAll(user_id);
+
+            return response.status(200).json(favorites);
+        } catch (error) {
+            throw new ErrorMessage(error);
+        }
+    }
 }

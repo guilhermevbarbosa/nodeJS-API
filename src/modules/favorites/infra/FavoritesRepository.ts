@@ -48,6 +48,23 @@ class FavoritesRepository implements IFavoritesRepository {
             return error;
         }
     }
+
+    public async getAll(uid: string): Promise<any> {
+        try {
+            const favoriteToDelete = await this.ormRepository.find({
+                where: { user_id: uid },
+                relations: ['job_id']
+            })
+
+            if (favoriteToDelete.length > 0) {
+                return favoriteToDelete;
+            } else {
+                throw new ErrorMessage("Não há favoritos no momento");
+            }
+        } catch (error) {
+            return error;
+        }
+    }
 }
 
 export default FavoritesRepository;
