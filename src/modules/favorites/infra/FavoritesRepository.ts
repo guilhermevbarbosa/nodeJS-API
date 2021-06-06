@@ -20,6 +20,34 @@ class FavoritesRepository implements IFavoritesRepository {
 
         return "Serviço favoritado com sucesso!";
     }
+
+    public async verifyIfHasFavorited(jobId: string, userId: string): Promise<any> {
+        const count = await this.ormRepository.findOne({
+            where: { job_id: jobId, user_id: userId }
+        });
+
+        if (count) {
+            return 1;
+        } else {
+            return 0;
+        }
+    }
+
+    public async delete(jobId: string, userId: string): Promise<any> {
+        try {
+            const favoriteToDelete = await this.ormRepository.findOne({
+                where: { job_id: jobId, user_id: userId }
+            })
+
+            if (favoriteToDelete) {
+                const id = String(favoriteToDelete.id);
+                await this.ormRepository.delete(id);
+                return 'Desfavoritado com sucesso';
+            }
+        } catch (error) {
+            return error;
+        }
+    }
 }
 
 export default FavoritesRepository;

@@ -32,5 +32,7 @@ routes.put("/service/update", jwt.verify, jobsController.update);
 routes.post("/service/delete", jwt.verify, jobsController.delete);
 
 routes.post("/service/favorite", jwt.verify, favoritesController.create);
+routes.post("/service/favorite-count", jwt.verify, favoritesController.verifyIfServiceHasFavorited);
+routes.post("/service/favorite-delete", jwt.verify, favoritesController.delete);
 
 export default routes;

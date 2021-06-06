@@ -11,4 +11,12 @@ export default class FavoritesService {
     async create(dataRequest: any) {
         return this.favoritesRepository.create(dataRequest);
     }
+
+    async verifyIfHasFavorited(jobId: string, userId: string) {
+        return this.favoritesRepository.verifyIfHasFavorited(jobId, userId);
+    }
+
+    async delete(jobId: string, userId: string) {
+        return this.favoritesRepository.delete(jobId, userId);
+    }
 }
